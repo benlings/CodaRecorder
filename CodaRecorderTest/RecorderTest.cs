@@ -31,6 +31,15 @@ namespace CodaRecorder
             Assert.That(testRecorder.KeyCount, Is.EqualTo(1));
         }
 
+        [Test]
+        public void insert_existing_key_maintains_key_count()
+        {
+            testRecorder.Upsert("testKey", 1);
+            testRecorder.Upsert("testKey", 2);
+
+            Assert.That(testRecorder.KeyCount, Is.EqualTo(1));
+        }
+
         [TestCase("testKey1", 1)]
         [TestCase("testKey2", 2)]
         public void requesting_inserted_key_gives_associated_value(string key, int value)

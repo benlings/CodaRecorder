@@ -25,7 +25,7 @@ namespace CodaRecorder
 
         public void Upsert(string key, int value)
         {
-            keyStore.Add(key, value);
+            keyStore[key] = value;
         }
 
         public void Delete(string key)
