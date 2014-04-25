@@ -50,6 +50,15 @@ namespace CodaRecorder
         }
 
         [Test]
+        public void insert_existing_key_updates_associated_value()
+        {
+            testRecorder.Upsert("testKey", 1);
+            testRecorder.Upsert("testKey", 2);
+
+            Assert.That(testRecorder.Get("testKey"), Is.EqualTo(2));
+        }
+
+        [Test]
         public void deleting_key_after_inserting_removes_key()
         {
             testRecorder.Upsert("testKey", 1);
