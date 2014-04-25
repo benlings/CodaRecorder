@@ -69,6 +69,16 @@ namespace CodaRecorder
         }
 
         [Test]
+        public void clear_after_inserting_keys_removes_all_keys()
+        {
+            testRecorder.Upsert("testKey1", 1);
+            testRecorder.Upsert("testKey2", 2);
+
+            testRecorder.Clear();
+            Assert.That(testRecorder.KeyCount, Is.EqualTo(0));
+        }
+
+        [Test]
         public void running_value_command_sets_value()
         {
             testRecorder.Do("value key 2");
