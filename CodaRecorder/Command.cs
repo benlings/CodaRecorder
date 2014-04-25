@@ -48,6 +48,11 @@ namespace CodaRecorder
         {
             // no data, nothing to do
         }
+
+        internal override void ActOn(IMutableRecorder recorder)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     class Invalid : Command
