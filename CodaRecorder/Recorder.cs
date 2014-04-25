@@ -10,6 +10,8 @@ namespace CodaRecorder
         private readonly IDictionary<string, int> keyStore = new Dictionary<string, int>();
         private readonly Parser parser = new Parser();
 
+        private List<IRecorderObserver> observers = new List<IRecorderObserver>();
+
         public int KeyCount
         {
             get
@@ -35,7 +37,23 @@ namespace CodaRecorder
 
         public void Do(string commandMessage)
         {
-            parser.Parse(commandMessage).ActOn(this);
+            var command = parser.Parse(commandMessage);
+            if (command is Invalid)
+            {
+            }
+            else
+            {   
+                command.ActOn(this);
+                foreach (var observer in this.observers)
+                {
+                    observer.KeysChanged(new HashSet<string>(new string[] {"key"}), new HashSet<string>(new string[] {}), new Dictionary<string, int>());
+                }
+            }
+        }
+
+        public void RegisterObserver(IRecorderObserver observer)
+        {
+            this.observers.Add(observer);
         }
 
         public void Clear()
