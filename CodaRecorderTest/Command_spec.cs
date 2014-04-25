@@ -24,5 +24,16 @@ namespace CodaRecorder
             Assert.That(recorder.Get("key"), Is.EqualTo(2));
 
         }
+
+        [Test]
+        public void Delete_command_removes_existing_key_and_value()
+        {
+            this.recorder.Upsert("key", 2);
+
+            var command = new Delete("key");
+            command.ActOn(recorder);
+
+            Assert.That(recorder.KeyCount, Is.EqualTo(0));
+        }
     }
 }
