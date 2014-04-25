@@ -19,7 +19,12 @@ namespace CodaRecorder
             this.Key = key;
             this.Value = value;
         }
-        
+
+
+        internal void ActOn(IMutableRecorder recorder)
+        {
+            recorder.Upsert(Key, Value);
+        }
     }
 
     class Invalid : Command
