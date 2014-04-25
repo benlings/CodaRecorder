@@ -14,8 +14,12 @@ namespace RecorderApplication
             Console.WriteLine("Recorder Application");
 
             var recorder = new Recorder();
-            Console.WriteLine("{0} Entries", recorder.KeyCount);
-            Console.ReadLine();
+            while (true)
+            {
+                String command = Console.ReadLine();
+                recorder.Do(command);
+                Console.WriteLine("{0} Entries", recorder.KeyCount);
+            }
         }
     }
 }

@@ -33,7 +33,7 @@ namespace CodaRecorder
             keyStore.Remove(key);
         }
 
-        internal void Do(string commandMessage)
+        public void Do(string commandMessage)
         {
             parser.Parse(commandMessage).ActOn(this);
         }
