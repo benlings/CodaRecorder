@@ -8,6 +8,7 @@ namespace CodaRecorder
     public class Recorder : IMutableRecorder
     {
         private readonly IDictionary<string, int> keyStore = new Dictionary<string, int>();
+        private readonly Parser parser = new Parser();
 
         public int KeyCount
         {
@@ -30,6 +31,11 @@ namespace CodaRecorder
         public void Delete(string key)
         {
             keyStore.Remove(key);
+        }
+
+        internal void Do(string commandMessage)
+        {
+            parser.Parse(commandMessage).ActOn(this);
         }
     }
 }

@@ -49,5 +49,13 @@ namespace CodaRecorder
 
             Assert.That(testRecorder.KeyCount, Is.EqualTo(0));
         }
+
+        [Test]
+        public void running_value_command_sets_value()
+        {
+            testRecorder.Do("value key 2");
+
+            Assert.That(testRecorder.Get("key"), Is.EqualTo(2));
+        }
     }
 }
