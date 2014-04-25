@@ -110,6 +110,18 @@ namespace CodaRecorder
             Assert.That(observer.Added, Is.EquivalentTo(new[]{"key"}));
             Assert.That(observer.Removed, Is.EquivalentTo(new string[]{}));
         }
+
+
+        [Test]
+        public void notification_fired_every_invalid_message()
+        {
+            var observer = new MockObserver();
+            testRecorder.RegisterObserver(observer);
+            testRecorder.Do("nonvalue key 2");
+
+            Assert.That(observer.InvalidCalled);
+
+        }
     }
 
     class MockObserver : IRecorderObserver
@@ -123,6 +135,8 @@ namespace CodaRecorder
             this.Added = added.ToList<string>();
             this.Removed = removed.ToList<string>();
         }
+
+        public void In
 }
 
 }
