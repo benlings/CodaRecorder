@@ -14,7 +14,7 @@ namespace CodaRecorder
         {
             Recorder testRecorder = new Recorder();
 
-            Assert.That(testRecorder.KeyCount(), Is.EqualTo(0));
+            Assert.That(testRecorder.KeyCount, Is.EqualTo(0));
         }
 
         [Test]
@@ -23,17 +23,19 @@ namespace CodaRecorder
             Recorder testRecorder = new Recorder();
             testRecorder.Upsert("testKey", 1);
 
-            Assert.That(testRecorder.KeyCount(), Is.EqualTo(1));
+            Assert.That(testRecorder.KeyCount, Is.EqualTo(1));
         }
 
-        [Test]
-        public void requesting_inserted_key_gives_associated_value()
+        [TestCase("testKey1", 1)]
+        [TestCase("testKey2", 2)]
+        public void requesting_inserted_key_gives_associated_value(string key, int value)
         {
             Recorder testRecorder = new Recorder();
-            testRecorder.Upsert("testKey", 1);
+            testRecorder.Upsert(key, value);
 
-            Assert.That(testRecorder.Get("testKey"), Is.EqualTo(1));
-
+            Assert.That(testRecorder.Get(key), Is.EqualTo(value));
         }
+
+        
     }
 }

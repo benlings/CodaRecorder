@@ -7,21 +7,24 @@ namespace CodaRecorder
 {
     public class Recorder : IMutableRecorder
     {
-        int count = 0;
+        private IDictionary<string, int> keyStore = new Dictionary<string, int>();
 
-        public int KeyCount()
+        public int KeyCount
         {
-            return this.count;
+            get
+            {
+                return keyStore.Count;
+            }
         }
 
         public int Get(string key)
         {
-            return 1;
+            return keyStore[key];
         }
 
         public void Upsert(string key, int value)
         {
-            this.count++;
+            keyStore.Add(key, value);
         }
 
         public void Delete(string key)
