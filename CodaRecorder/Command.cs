@@ -27,6 +27,15 @@ namespace CodaRecorder
         }
     }
 
+    class Delete : Command
+    {
+        public Delete(string key)
+        {
+            this.Key = key;
+        }
+
+    }
+
     class Invalid : Command
     {
 

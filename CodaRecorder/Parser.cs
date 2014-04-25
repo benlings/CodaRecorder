@@ -15,6 +15,8 @@ namespace CodaRecorder
             {
                 case "value":
                     return ParseValueCommand(parts);
+                case "drop":
+                    return ParseDropCommand(parts);
 
                 default:
                     return new Invalid("Unknown command");
@@ -37,6 +39,16 @@ namespace CodaRecorder
             {
                 return new Invalid("Non-integer value");
             }
+        }
+
+        private static Command ParseDropCommand(string[] parts)
+        {
+            if (parts.Length != 2)
+            {
+                return new Invalid("Incorrectly formatted drop string");
+            }
+
+            return new Delete(parts[1]);
         }
     }
 }
