@@ -22,6 +22,14 @@ namespace CodaRecorder
             Assert.That(command.Value, Is.EqualTo(value));
         }
 
+        
+        [TestCase("clear")]
+        public void parser_creates_delete_from_valid_drop_message_string(String message)
+        {
+            var command = parser.Parse(message);
+
+            Assert.That(command, Is.InstanceOf<Clear>());
+        }
         [TestCase("value key space 2", "Incorrectly formatted value string")]
         [TestCase("value key nonint", "Non-integer value")]
         [TestCase("value key", "Incorrectly formatted value string")]
