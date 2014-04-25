@@ -21,4 +21,14 @@ namespace CodaRecorder
         }
         
     }
+
+    class Invalid : Command
+    {
+
+        public Invalid(string errorMessage)
+        {
+            this.Message = errorMessage;
+        }
+        public String Message { get; private set; }
+    }
 }
