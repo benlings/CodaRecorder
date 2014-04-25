@@ -24,7 +24,11 @@ namespace CodaRecorder
 
         [TestCase("value key space 2", "Incorrectly formatted value string")]
         [TestCase("value key nonint", "Non-integer value")]
+        [TestCase("value key", "Incorrectly formatted value string")]
+        [TestCase("drop", "Incorrectly formatted drop string")]
+        [TestCase("drop key 2", "Incorrectly formatted drop string")]
         [TestCase("not_value key nonint", "Unknown command")]
+        [TestCase("", "Unknown command")]
         public void parser_returns_invalid_command_for_non_valid_message_string(String message, String errorMessage)
         {
             var command = parser.Parse(message);
@@ -32,8 +36,19 @@ namespace CodaRecorder
             Assert.That(command, Is.InstanceOf<Invalid>());
             var invalidCommand = (Invalid)command;
             Assert.That(invalidCommand.Message, Is.EqualTo(errorMessage));
-            
+        
         }
+
+        [TestCase("drop key", "key")]
+        [TestCase("drop other_key", "other_key")]
+        public void parser_creates_delete_from_valid_drop_message_string(String message, String key)
+        {
+            var command = parser.Parse(message);
+
+            Assert.That(command, Is.InstanceOf<Delete>());
+            Assert.That(command.Key, Is.EqualTo(key));
+        }
+
 
     }
 }
