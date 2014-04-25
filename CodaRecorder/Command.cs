@@ -5,11 +5,13 @@ using System.Text;
 
 namespace CodaRecorder
 {
-    class Command
+    abstract class Command
     {
 
         public String Key { get; protected set; }
         public int Value { get; protected set; }
+
+        internal abstract void ActOn(IMutableRecorder recorder);
     }
 
     class Upsert : Command
@@ -21,7 +23,7 @@ namespace CodaRecorder
         }
 
 
-        internal void ActOn(IMutableRecorder recorder)
+        internal override void ActOn(IMutableRecorder recorder)
         {
             recorder.Upsert(Key, Value);
         }
@@ -34,6 +36,11 @@ namespace CodaRecorder
             this.Key = key;
         }
 
+
+        internal override void ActOn(IMutableRecorder recorder)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     class Invalid : Command
@@ -44,5 +51,10 @@ namespace CodaRecorder
             this.Message = errorMessage;
         }
         public String Message { get; private set; }
+
+        internal override void ActOn(IMutableRecorder recorder)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
