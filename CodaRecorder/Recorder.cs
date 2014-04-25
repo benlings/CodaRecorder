@@ -29,7 +29,7 @@ namespace CodaRecorder
 
         public void Delete(string key)
         {
-            throw new NotImplementedException();
+            keyStore.Remove(key);
         }
     }
 }

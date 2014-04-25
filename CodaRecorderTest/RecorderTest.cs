@@ -36,6 +36,15 @@ namespace CodaRecorder
             Assert.That(testRecorder.Get(key), Is.EqualTo(value));
         }
 
-        
+        [Test]
+        public void deleting_key_after_inserting_removes_key()
+        {
+            Recorder testRecorder = new Recorder();
+            testRecorder.Upsert("testKey", 1);
+
+            testRecorder.Delete("testKey");
+
+            Assert.That(testRecorder.KeyCount, Is.EqualTo(0));
+        }
     }
 }
