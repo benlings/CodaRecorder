@@ -38,7 +38,7 @@ namespace CodaRecorder
             parser.Parse(commandMessage).ActOn(this);
         }
 
-        internal void Clear()
+        public void Clear()
         {
             keyStore.Clear();
         }
