@@ -20,6 +20,22 @@ namespace CodaRecorder
         {
             InsertedKeys = new HashSet<string>();
             DeletedKeys = new HashSet<string>();
+
+            foreach (string key in this.newDictionary.Keys)
+            {
+                if (!this.oldDictionary.Keys.Contains(key))
+                {
+                    InsertedKeys.Add(key);
+                }
+            }
+
+            foreach (string key in this.oldDictionary.Keys)
+            {
+                if (!this.newDictionary.Keys.Contains(key))
+                {
+                    DeletedKeys.Add(key);
+                }
+            }
         }
 
         public ISet<string> InsertedKeys { get; private set; }
