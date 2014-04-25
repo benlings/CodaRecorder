@@ -55,5 +55,10 @@ namespace CodaRecorder
         {
             this.observers.Add(observer);
         }
+
+        public void Clear()
+        {
+            keyStore.Clear();
+        }
     }
 }

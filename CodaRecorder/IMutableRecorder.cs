@@ -11,5 +11,7 @@ namespace CodaRecorder
         void Upsert(String key, int value);
 
         void Delete(String key);
+
+        void Clear();
     }
 }
