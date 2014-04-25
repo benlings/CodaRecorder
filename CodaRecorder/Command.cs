@@ -51,7 +51,7 @@ namespace CodaRecorder
 
         internal override void ActOn(IMutableRecorder recorder)
         {
-            throw new NotImplementedException();
+            recorder.Clear();
         }
     }
 
