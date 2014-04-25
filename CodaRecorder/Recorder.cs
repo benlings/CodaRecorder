@@ -40,6 +40,10 @@ namespace CodaRecorder
             var command = parser.Parse(commandMessage);
             if (command is Invalid)
             {
+                foreach (var observer in this.observers)
+                {
+                    observer.InvalidCommand(((Invalid)command).Message);
+                }
             }
             else
             {   

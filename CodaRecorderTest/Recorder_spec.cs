@@ -126,17 +126,20 @@ namespace CodaRecorder
 
     class MockObserver : IRecorderObserver
     {
+        public bool InvalidCalled { get; set; }
         public bool Called { get; set; }
         public List<String> Added { get; private set; }
         public List<String> Removed { get; private set; }
-        public void  KeysChanged(ISet<string> added, ISet<string> removed, IDictionary<string, int> updated)
+        public void KeysChanged(ISet<string> added, ISet<string> removed, IDictionary<string, int> updated)
         {
             this.Called = true;
             this.Added = added.ToList<string>();
             this.Removed = removed.ToList<string>();
         }
 
-        public void In
-}
-
+        public void InvalidCommand(String message)
+        {
+            this.InvalidCalled = true;
+        }
+    }
 }
