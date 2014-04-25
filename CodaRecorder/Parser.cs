@@ -17,6 +17,8 @@ namespace CodaRecorder
                     return ParseValueCommand(parts);
                 case "drop":
                     return ParseDropCommand(parts);
+                case "clear":
+                    return ParseClearCommand(parts);
 
                 default:
                     return new Invalid("Unknown command");
@@ -49,6 +51,16 @@ namespace CodaRecorder
             }
 
             return new Delete(parts[1]);
+        }
+
+        private static Command ParseClearCommand(string[] parts)
+        {
+            if (parts.Length != 1)
+            {
+                return new Invalid("Incorrectly formatted clear string");
+            }
+
+            return new Clear();
         }
     }
 }

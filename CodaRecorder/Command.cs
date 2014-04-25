@@ -7,15 +7,13 @@ namespace CodaRecorder
 {
     abstract class Command
     {
-
-        public String Key { get; protected set; }
-        public int Value { get; protected set; }
-
         internal abstract void ActOn(IMutableRecorder recorder);
     }
 
     class Upsert : Command
     {
+        public String Key { get; protected set; }
+        public int Value { get; protected set; }
         public Upsert(string key, int value)
         {
             this.Key = key;
@@ -31,6 +29,7 @@ namespace CodaRecorder
 
     class Delete : Command
     {
+        public String Key { get; protected set; }
         public Delete(string key)
         {
             this.Key = key;
@@ -43,14 +42,21 @@ namespace CodaRecorder
         }
     }
 
+    class Clear : Command
+    {
+        public Clear()
+        {
+            // no data, nothing to do
+        }
+    }
+
     class Invalid : Command
     {
-
+        public String Message { get; private set; }
         public Invalid(string errorMessage)
         {
             this.Message = errorMessage;
         }
-        public String Message { get; private set; }
 
         internal override void ActOn(IMutableRecorder recorder)
         {
