@@ -18,34 +18,11 @@ namespace CodaRecorder
             var command = parser.Parse(message);
 
             Assert.That(command, Is.InstanceOf<Upsert>());
-            Assert.That(command.Key, Is.EqualTo(key));
-            Assert.That(command.Value, Is.EqualTo(value));
+            var upsertCommand = (Upsert)command;
+            Assert.That(upsertCommand.Key, Is.EqualTo(key));
+            Assert.That(upsertCommand.Value, Is.EqualTo(value));
         }
 
-        
-        [TestCase("clear")]
-        public void parser_creates_delete_from_valid_drop_message_string(String message)
-        {
-            var command = parser.Parse(message);
-
-            Assert.That(command, Is.InstanceOf<Clear>());
-        }
-        [TestCase("value key space 2", "Incorrectly formatted value string")]
-        [TestCase("value key nonint", "Non-integer value")]
-        [TestCase("value key", "Incorrectly formatted value string")]
-        [TestCase("drop", "Incorrectly formatted drop string")]
-        [TestCase("drop key 2", "Incorrectly formatted drop string")]
-        [TestCase("not_value key nonint", "Unknown command")]
-        [TestCase("", "Unknown command")]
-        public void parser_returns_invalid_command_for_non_valid_message_string(String message, String errorMessage)
-        {
-            var command = parser.Parse(message);
-
-            Assert.That(command, Is.InstanceOf<Invalid>());
-            var invalidCommand = (Invalid)command;
-            Assert.That(invalidCommand.Message, Is.EqualTo(errorMessage));
-        
-        }
 
         [TestCase("drop key", "key")]
         [TestCase("drop other_key", "other_key")]
@@ -54,9 +31,63 @@ namespace CodaRecorder
             var command = parser.Parse(message);
 
             Assert.That(command, Is.InstanceOf<Delete>());
-            Assert.That(command.Key, Is.EqualTo(key));
+            var deleteCommand = (Delete)command;
+            Assert.That(deleteCommand.Key, Is.EqualTo(key));
+        }
+        
+        [TestCase("clear")]
+        public void parser_creates_delete_from_valid_drop_message_string(String message)
+        {
+            var command = parser.Parse(message);
+
+            Assert.That(command, Is.InstanceOf<Clear>());
         }
 
+    }
+
+    [TestFixture]
+    class InvalidParse_spec
+    {
+        private Parser parser = new Parser();
+        
+        [TestCase("", "Unknown command")]
+        public void empty_message_returns_invalid_command(String message, String errorMessage)
+        {
+            AssertThatInvalidMessageReturnsInvalidCommand(message, errorMessage);
+        }
+
+
+        [TestCase("value key space 2", "Incorrectly formatted value string")]
+        [TestCase("value key nonint", "Non-integer value")]
+        [TestCase("value key", "Incorrectly formatted value string")]
+        public void non_valid_value_string_returns_invalid_command(String message, String errorMessage)
+        {
+            AssertThatInvalidMessageReturnsInvalidCommand(message, errorMessage);
+        }
+
+
+        [TestCase("drop", "Incorrectly formatted drop string")]
+        [TestCase("drop key 2", "Incorrectly formatted drop string")]
+        public void non_valid_drop_string_returns_invalid_command(String message, String errorMessage)
+        {
+            AssertThatInvalidMessageReturnsInvalidCommand(message, errorMessage);
+        }
+
+        [TestCase("not_value key nonint", "Unknown command")]
+        public void unknown_comand_return_invalid_command(String message, String errorMessage)
+        {
+            AssertThatInvalidMessageReturnsInvalidCommand(message, errorMessage);
+        }
+
+        private void AssertThatInvalidMessageReturnsInvalidCommand(String message, String errorMessage)
+        {
+
+            var command = parser.Parse(message);
+
+            Assert.That(command, Is.InstanceOf<Invalid>());
+            var invalidCommand = (Invalid)command;
+            Assert.That(invalidCommand.Message, Is.EqualTo(errorMessage));
+        }
 
     }
 }
