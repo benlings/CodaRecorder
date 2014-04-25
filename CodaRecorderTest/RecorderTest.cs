@@ -67,4 +67,43 @@ namespace CodaRecorder
             Assert.That(testRecorder.Get("key"), Is.EqualTo(2));
         }
     }
+
+    [TestFixture]
+    class Notification_spec
+    {
+        private Recorder testRecorder;
+
+        [SetUp]
+        public void SetUpTestRecorder()
+        {
+            testRecorder = new Recorder();
+        }
+
+        [Test]
+        public void notification_fired_every_valid_message()
+        {
+            var observer = new MockObserver();
+            testRecorder.RegisterObserver(observer);
+            testRecorder.Do("value key 2");
+
+            Assert.That(observer.Called);
+
+            Assert.That(observer.Added, Is.EquivalentTo(new[]{"key"}));
+            Assert.That(observer.Removed, Is.EquivalentTo(new string[]{}));
+        }
+    }
+
+    class MockObserver : IRecorderObserver
+    {
+        public bool Called { get; set; }
+        public List<String> Added { get; private set; }
+        public List<String> Removed { get; private set; }
+        public void  KeysChanged(ISet<string> added, ISet<string> removed, IDictionary<string, int> updated)
+        {
+            this.Called = true;
+            this.Added = added.ToList<string>();
+            this.Removed = removed.ToList<string>();
+        }
+}
+
 }
