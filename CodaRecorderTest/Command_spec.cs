@@ -11,7 +11,13 @@ namespace CodaRecorder
     class Command_spec
     {
 
-        private Recorder recorder = new Recorder();
+        private Recorder recorder;
+
+        [SetUp]
+        public void SetUpTestRecorder()
+        {
+            recorder = new Recorder();
+        }
 
         [Test]
         public void Upsert_command_adds_new_key_and_value()
