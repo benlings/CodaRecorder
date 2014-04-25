@@ -14,7 +14,7 @@ namespace RecorderApplication
             Console.WriteLine("Recorder Application");
 
             var recorder = new Recorder();
-            Console.WriteLine("{0} Entries", recorder.KeyCount());
+            Console.WriteLine("{0} Entries", recorder.KeyCount);
             Console.ReadLine();
         }
     }
