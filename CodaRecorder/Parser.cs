@@ -9,7 +9,8 @@ namespace CodaRecorder
     {
         internal Command Parse(string message)
         {
-            return new Upsert("key", 2);
+            var parts = message.Split(' ');
+            return new Upsert(parts[1], int.Parse(parts[2]));
         }
     }
 }
