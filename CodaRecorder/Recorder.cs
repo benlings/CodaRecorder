@@ -7,7 +7,7 @@ namespace CodaRecorder
 {
     public class Recorder : IMutableRecorder
     {
-        private IDictionary<string, int> keyStore = new Dictionary<string, int>();
+        private readonly IDictionary<string, int> keyStore = new Dictionary<string, int>();
 
         public int KeyCount
         {
